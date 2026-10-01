@@ -1,0 +1,622 @@
+// ============================================================
+// PLC MODBUS TCP - 3 ROW UI
+// ============================================================
+
+export component MainWindow inherits Window {
+
+    title: "PLC Modbus TCP";
+
+    width: 1100px;
+    height: 720px;
+
+    background: #031b3d;
+
+
+    // ============================================================
+    // PROPERTIES
+    // ============================================================
+
+    in property <bool> plc-online: false;
+
+    in property <string> plc-ip: "192.168.0.1";
+
+    in property <string> plc-port: "502";
+
+    in property <bool> register0-on: false;
+
+    in property <bool> register1-on: false;
+
+    in property <bool> register2-bit2: false;
+
+    in property <string> latency: "-- ms";
+
+    in property <string> response: "CONNECTING";
+
+
+    // ============================================================
+    // CALLBACKS
+    // ============================================================
+
+    callback set-button-clicked();
+
+    callback second-button-clicked();
+
+
+    // ============================================================
+    // MAIN
+    // ============================================================
+
+    Rectangle {
+
+        background: #031b3d;
+
+        // ========================================================
+        // ROW 1 - HEADER
+        // ========================================================
+
+        Rectangle {
+
+            x: 35px;
+            y: 25px;
+
+            width: 1030px;
+            height: 125px;
+
+            background: #092f62;
+
+            border-radius: 16px;
+
+            border-width: 1px;
+            border-color: #155a9c;
+
+
+            
+
+
+            // ----------------------------------------------------
+            // TITLE
+            // ----------------------------------------------------
+
+            Text {
+
+                x: 125px;
+                y: 28px;
+
+                text: "PLC MODBUS TCP";
+
+                color: white;
+
+                font-size: 30px;
+
+                font-weight: 700;
+            }
+
+
+        
+
+            // ----------------------------------------------------
+            // ONLINE / OFFLINE
+            // ----------------------------------------------------
+
+            Rectangle {
+
+                x: 665px;
+                y: 22px;
+
+                width: 150px;
+                height: 80px;
+
+                background:
+                    plc-online
+                    ? #062e2b
+                    : #30151b;
+
+                border-radius: 40px;
+
+
+                Rectangle {
+
+                    x: 15px;
+                    y: 22px;
+
+                    width: 36px;
+                    height: 36px;
+
+                    border-radius: 18px;
+
+                    background:
+                        plc-online
+                        ? #12e68b
+                        : #ef4444;
+
+                    border-width: 4px;
+
+                    border-color:
+                        plc-online
+                        ? #087d62
+                        : #70232d;
+                }
+
+
+                Text {
+
+                    x: 62px;
+                    y: 17px;
+
+                    text:
+                        plc-online
+                        ? "PLC"
+                        : "PLC";
+
+                    color: #78baff;
+
+                    font-size: 15px;
+
+                    font-weight: 600;
+                }
+
+
+                Text {
+
+                    x: 62px;
+                    y: 38px;
+
+                    text:
+                        plc-online
+                        ? "ONLINE"
+                        : "OFFLINE";
+
+                    color:
+                        plc-online
+                        ? #16e695
+                        : #ff6262;
+
+                    font-size: 17px;
+
+                    font-weight: 700;
+                }
+            }
+
+
+            // ----------------------------------------------------
+            // LATENCY
+            // ----------------------------------------------------
+
+            Text {
+
+                x: 845px;
+                y: 22px;
+
+                text: "Modbus Latency:";
+
+                color: #72b5f4;
+
+                font-size: 15px;
+            }
+
+
+            Text {
+
+                x: 845px;
+                y: 45px;
+
+                text: latency;
+
+                color: white;
+
+                font-size: 25px;
+
+                font-weight: 700;
+            }
+
+
+            Text {
+
+                x: 845px;
+                y: 78px;
+
+                text:
+                    plc-online
+                    ? "CONNECTED"
+                    : "WAITING FOR PLC";
+
+                color:
+                    plc-online
+                    ? #19df91
+                    : #ff6868;
+
+                font-size: 12px;
+
+                font-weight: 700;
+            }
+        }
+
+
+        // ========================================================
+        // ROW 2 - REGISTER 2 STATUS
+        // ========================================================
+
+        Rectangle {
+
+            x: 35px;
+            y: 170px;
+
+            width: 1030px;
+            height: 200px;
+
+            background: #082b57;
+
+            border-radius: 16px;
+
+            border-width: 1px;
+            border-color: #145aa0;
+
+
+
+            // ----------------------------------------------------
+            // STATUS
+            // ----------------------------------------------------
+
+            Rectangle {
+
+                x: 330px;
+                y: 30px;
+
+                width: 370px;
+                height: 130px;
+
+                background:
+                    register2-bit2
+                    ? #063d32
+                    : #172d47;
+
+                border-radius: 65px;
+
+                border-width: 2px;
+
+                border-color:
+                    register2-bit2
+                    ? #0f9e72
+                    : #294b70;
+
+
+                Rectangle {
+
+                    x: 35px;
+                    y: 35px;
+
+                    width: 60px;
+                    height: 60px;
+
+                    border-radius: 30px;
+
+                    background:
+                        register2-bit2
+                        ? #14e68c
+                        : #66788b;
+                }
+
+
+                Text {
+
+                    x: 125px;
+                    y: 25px;
+
+                    text: "REGISTER 2";
+
+                    color: #8ab8df;
+
+                    font-size: 16px;
+
+                    font-weight: 600;
+                }
+
+
+                Text {
+
+                    x: 125px;
+                    y: 51px;
+
+                    text:
+                        register2-bit2
+                        ? "ON"
+                        : "OFF";
+
+                    color:
+                        register2-bit2
+                        ? #19e996
+                        : #9baabd;
+
+                    font-size: 32px;
+
+                    font-weight: 700;
+                }
+            }
+
+        }
+
+
+        // ========================================================
+        // ROW 3 - REGISTER CONTROLS
+        // ========================================================
+
+        Rectangle {
+
+            x: 35px;
+            y: 390px;
+
+            width: 1030px;
+            height: 285px;
+
+            background: #082b57;
+
+            border-radius: 16px;
+
+            border-width: 1px;
+            border-color: #145aa0;
+
+
+
+            // ----------------------------------------------------
+            // REGISTER 0
+            // ----------------------------------------------------
+
+            Rectangle {
+
+                x: 25px;
+                y: 25px;
+
+                width: 475px;
+                height: 235px;
+
+                background: #0b3970;
+
+                border-radius: 14px;
+
+                border-width: 1px;
+                border-color: #1769b3;
+
+
+                // Number
+
+                Rectangle {
+
+                    x: 25px;
+                    y: 25px;
+
+                    width: 60px;
+                    height: 60px;
+
+                    border-radius: 30px;
+
+                    background:
+                        register0-on
+                        ? #10c978
+                        : #087de8;
+
+
+                    Text {
+
+                        text: "0";
+
+                        color: white;
+
+                        font-size: 28px;
+
+                        font-weight: 700;
+
+                        horizontal-alignment: center;
+
+                        vertical-alignment: center;
+                    }
+                }
+
+
+                Text {
+
+                    x: 105px;
+                    y: 24px;
+
+                    text: "REGISTER 0";
+
+                    color: white;
+
+                    font-size: 22px;
+
+                    font-weight: 700;
+                }
+
+
+                Text {
+
+                    x: 105px;
+                    y: 55px;
+
+                    
+                    color:
+                        register0-on
+                        ? #20e898
+                        : #7ea6ca;
+
+                    font-size: 14px;
+
+                    font-weight: 600;
+                }
+
+
+                // Button
+
+                Rectangle {
+
+                    x: 25px;
+                    y: 115px;
+
+                    width: 425px;
+                    height: 80px;
+
+                    background:
+                        register0-on
+                        ? #0da968
+                        : #087fe8;
+
+                    border-radius: 12px;
+
+
+                    Text {
+
+                        text: "SET";
+
+                        color: white;
+
+                        font-size: 25px;
+
+                        font-weight: 700;
+
+                        horizontal-alignment: center;
+
+                        vertical-alignment: center;
+                    }
+
+
+                    TouchArea {
+
+                        clicked => {
+                            set-button-clicked();
+                        }
+                    }
+                }
+            }
+
+
+            // ----------------------------------------------------
+            // REGISTER 1
+            // ----------------------------------------------------
+
+            Rectangle {
+
+                x: 530px;
+                y: 25px;
+
+                width: 475px;
+                height: 235px;
+
+                background: #15135a;
+
+                border-radius: 14px;
+
+                border-width: 1px;
+                border-color: #5140bd;
+
+
+                // Number
+
+                Rectangle {
+
+                    x: 25px;
+                    y: 25px;
+
+                    width: 60px;
+                    height: 60px;
+
+                    border-radius: 30px;
+
+                    background:
+                        register1-on
+                        ? #10c978
+                        : #6335e6;
+
+
+                    Text {
+
+                        text: "1";
+
+                        color: white;
+
+                        font-size: 28px;
+
+                        font-weight: 700;
+
+                        horizontal-alignment: center;
+
+                        vertical-alignment: center;
+                    }
+                }
+
+
+                Text {
+
+                    x: 105px;
+                    y: 24px;
+
+                    text: "REGISTER 1";
+
+                    color: white;
+
+                    font-size: 22px;
+
+                    font-weight: 700;
+                }
+
+
+                Text {
+
+                    x: 105px;
+                    y: 55px;
+
+                   
+                    color:
+                        register1-on
+                        ? #20e898
+                        : #a796e8;
+
+                    font-size: 14px;
+
+                    font-weight: 600;
+                }
+
+
+                // Button
+
+                Rectangle {
+
+                    x: 25px;
+                    y: 115px;
+
+                    width: 425px;
+                    height: 80px;
+
+                    background:
+                        register1-on
+                        ? #0da968
+                        : #6539e7;
+
+                    border-radius: 12px;
+
+
+                    Text {
+
+                        text: "RESET";
+
+                        color: white;
+
+                        font-size: 25px;
+
+                        font-weight: 700;
+
+                        horizontal-alignment: center;
+
+                        vertical-alignment: center;
+                    }
+
+
+                    TouchArea {
+
+                        clicked => {
+                            second-button-clicked();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
